@@ -34,6 +34,8 @@ def upload_dataframe_to_s3(dfs, bucket_name):
     for ano, df in dfs.items():
         parquet_buffer = BytesIO()
         df.to_parquet(parquet_buffer, engine='pyarrow')
+        
+
         parquet_buffer.seek(0)
         
         try:
@@ -63,12 +65,12 @@ def upload_to_s3(file_name, bucket_name, object_name):
 def main():
     # Caminhos dos arquivos
     file_paths = [
-        "data/raw/dados_2015.csv",
-        "data/raw/dados_2016.csv",
-        "data/raw/dados_2017.csv",
-        "data/raw/dados_2018.csv",
-        "data/raw/dados_2019.csv",
-        "data/raw/dados_2020.csv"
+        "data/dados_2015.csv",
+        "data/dados_2016.csv",
+        "data/dados_2017.csv",
+        "data/dados_2018.csv",
+        "data/dados_2019.csv",
+        "data/dados_2020.csv"
     ]
     
     # Carregar os dados
@@ -78,7 +80,7 @@ def main():
     upload_dataframe_to_s3(dfs, 'datalakeaws-pipeline')
 
     # Fazer upload de um arquivo CSV específico para o S3
-    upload_to_s3("data/raw/dados_2015.csv", 'datalakeaws-pipeline', 'bronze/dados_2015.csv')
+    upload_to_s3("data/dados_2015.csv", 'datalakeaws-pipeline', 'bronze/dados_2015.csv')
 
 if __name__ == "__main__":
     main()
